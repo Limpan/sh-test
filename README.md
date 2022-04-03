@@ -1,6 +1,6 @@
 # How to run
 
-Requires click to run. Install with `python -m pip install click`.
+Requires click to run. Install with `python -m pip install -r requirements.txt`.
 
 Run with example data:
 ```
