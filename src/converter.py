@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import click
 import xml.etree.ElementTree as ET
 
@@ -13,8 +15,6 @@ def convert_to_xml(data):
 
     for line in data:
         tag, *values = line.split('|')
-
-
 
         if tag == "P":
             if stack[-1].tag == "family":
@@ -62,13 +62,17 @@ def convert_to_xml(data):
         else:
             raise ParseError("\n{}\n{}".format(line, stack[-1].tag))
 
-
     return root
 
 
 @click.command()
-def main():
-    click.echo("Hello")
+@click.argument('input', type=click.File('r'))
+@click.argument('output', type=click.File('wb'))
+def main(input, output):
+    click.echo("Converting to XML...")
+    data = input.readlines()
+    result = convert_to_xml(data)
+    output.write(ET.tostring(result))
 
 
 if __name__ == "__main__":
